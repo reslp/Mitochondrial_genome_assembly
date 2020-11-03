@@ -125,10 +125,12 @@ rule MITObim:
         "trimmed/{id}_interleaved_trim.fastq"
     output:
         "assemblies/{assembler}/Ecr_{id}/Ecr_{id}_{assembler}.fasta"
+    params:
+        id = "{id}"
     singularity:
         "docker://chrishah/mitobim:v.1.9.1"
     shell:
-        "scripts/MITObim.pl -sample Ecr_{id} -ref Diphyllobothrium_stemmacephalum_mtgenome -readpool trimmed/{id}_interleaved_trim.fastq --quick seeds/Diphyllobothrium_stemmacephalum_mtgenome_NC_035881.1.fasta -end 100 --denovo --paired --clean --NFS_warn_only &> log"
+        "scripts/MITObim.pl -sample Ecr_{params.id} -ref Diphyllobothrium_stemmacephalum_mtgenome -readpool trimmed/{params.id}_interleaved_trim.fastq --quick seeds/Diphyllobothrium_stemmacephalum_mtgenome_NC_035881.1.fasta -end 100 --denovo --paired --clean --NFS_warn_only &> log"
          
 
 rule quast:
